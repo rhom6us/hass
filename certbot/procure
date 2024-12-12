@@ -1,3 +1,14 @@
-#! /usr/bin/sh
+#! /bin/bash
 
-docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/  --email goliyth+certbot@gmail.com --agree-tos -d rhombus-hass.duckdns.org -d rhombus-esphome.duckdns.org
+source .env
+
+# docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/  --email goliyth+certbot@gmail.com --agree-tos --dry-run -d rhombus-hass.duckdns.org -d rhombus-esphome.duckdns.org
+
+docker compose run --rm  certbot certonly \
+--webroot --webroot-path /var/www/certbot/ \
+--non-interactive \
+--email $DNS_SUPPORT_EMAIL \
+--agree-tos \
+--domain $HASS_DOMAIN \
+--domain $ESPHOME_DOMAIN \
+# --dry-run
