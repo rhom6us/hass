@@ -35,37 +35,32 @@ services:
       # - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     restart: unless-stopped
 
-  certbot:
-    image: certbot/certbot:latest
-    depends_on:
-      - nginx
-    volumes:
-      - ./certbot/www/:/var/www/certbot/:rw # this is where certbot will put the challeng files
-      - ./certbot/conf/:/etc/letsencrypt/:rw # this is where certbot will put the certificates
-      - ./certbot/logs:/var/log/letsencrypt/:rw
-    profiles:
-      - certbot
-
   certbot2:
     image: "infinityofspace/certbot_dns_duckdns:latest"
     container_name: "certbot_dns_duckdns"
     volumes:
-      # - "./data/letsencrypt:/etc/letsencrypt"
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/logs:/var/log/letsencrypt/:rw
-    env_file:
-      - ./.env
-      - ./.env.secrets
     command: certonly
       --non-interactive
       --agree-tos
       --email $DNS_SUPPORT_EMAIL
       --preferred-challenges dns
       --authenticator dns-duckdns
-      --dns-duckdns-token ${DUCKDNS_TOKEN:?Error}
+      --dns-duckdns-token ${DUCKDNS_TOKEN}
       --dns-duckdns-propagation-seconds 30
       --domain $HASS_DOMAIN
       --domain $ESPHOME_DOMAIN
       # --dry-run
-    # profiles:
-    #   - certbot2
+
+
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   depends_on:
+  #     - nginx
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/:rw # this is where certbot will put the challeng files
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw # this is where certbot will put the certificates
+  #     - ./certbot/logs:/var/log/letsencrypt/:rw
+  #   profiles:
+  #     - certbot
