@@ -1,5 +1,3 @@
-
 certbot
 home-assistant
 esphome
-!home-assistant/config/*.yaml
