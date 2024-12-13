@@ -1,3 +1,4 @@
 certbot
 home-assistant
 esphome
+.env.secrets

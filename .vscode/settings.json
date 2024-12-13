@@ -1,0 +1,12 @@
+{
+  "explorer.fileNesting.patterns": {
+    ".env": ".env.secrets"
+  },
+  "docker.commands.composeUp": [
+
+    {
+      "label": "Compose Up",
+      "template": "${composeCommand} ${configurationFile} --env-file ./.env --env-file ./.env.secrets up ${detached} ${build}"
+    }
+  ]
+}

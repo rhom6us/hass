@@ -53,13 +53,16 @@ services:
       # - "./data/letsencrypt:/etc/letsencrypt"
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/logs:/var/log/letsencrypt/:rw
+    env_file:
+      - ./.env
+      - ./.env.secrets
     command: certonly
       --non-interactive
       --agree-tos
       --email $DNS_SUPPORT_EMAIL
       --preferred-challenges dns
       --authenticator dns-duckdns
-      --dns-duckdns-token $DUCKDNS_TOKEN
+      --dns-duckdns-token ${DUCKDNS_TOKEN:?Error}
       --dns-duckdns-propagation-seconds 30
       --domain $HASS_DOMAIN
       --domain $ESPHOME_DOMAIN
