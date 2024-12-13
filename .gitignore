@@ -1,3 +1,4 @@
 
-certbot/conf
-home-assistant/config
+certbot
+home-assistant
+esphome
